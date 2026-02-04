@@ -7,32 +7,56 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.example.miniweather_fitchc.Utilities.WeatherService
 
 class MainActivity : AppCompatActivity() {
 
-    // Declarar variables bonitas insanas
-    private lateinit var tvGreeting: TextView
-    private lateinit var tvCity: TextView
-    private lateinit var ivWeather: ImageView
-    private lateinit var tvTemperature: TextView
-    private lateinit var tvWeather: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_main)
 
-        // Inicializacion de los elementos
-        tvGreeting = findViewById(R.id.tvGreeting)
-        tvCity = findViewById(R.id.tvCity)
-        ivWeather = findViewById(R.id.ivWeather)
-        tvTemperature = findViewById(R.id.tvTemperature)
-        tvWeather = findViewById(R.id.tvWeather)
+        var tvGreeting: TextView = findViewById(R.id.tvGreeting)
+        var tvCity: TextView = findViewById(R.id.tvCity)
+        var ivWeather: ImageView = findViewById(R.id.ivWeather)
+        var tvTemperature: TextView = findViewById(R.id.tvTemperature)
+        var tvWeather: TextView = findViewById(R.id.tvWeather)
 
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
+        val ws = WeatherService()
+        val cities = ws.getCities()
+        tvCity.text = cities[0]
+
+        val weather = ws.getWeather(cities[0])
+        tvTemperature.text = "${weather.temperature}"
+        tvGreeting.text = "Bienvenido"
+
+        when (weather.weatherType) {
+            "snowy" -> {
+                tvWeather.text = getText(R.string.snowy)
+                ivWeather.setImageResource(R.drawable.ic_snowy)
+            }
+
+            "rainy" -> {
+                tvWeather.text = getText(R.string.rainy)
+                ivWeather.setImageResource(R.drawable.ic_snowy)
+            }
+
+            "cloudy" -> {
+                tvWeather.text = getText(R.string.cloudy)
+                ivWeather.setImageResource(R.drawable.ic_cloudy)
+            }
+
+            "sunny" -> {
+                tvWeather.text = getText(R.string.sunny)
+                ivWeather.setImageResource(R.drawable.ic_sunny)
+            }
+
+            "windy" -> {
+                tvWeather.text = getText(R.string.windy)
+                ivWeather.setImageResource(R.drawable.ic_windy)
+            }
         }
+
     }
 }

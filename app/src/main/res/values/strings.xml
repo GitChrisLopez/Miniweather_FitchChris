@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">Miniweather_FitchC</string>
+    <string name="cloudy">Nubladp</string>
+    <string name="snowy">Nevado</string>
+    <string name="sunny">Soleado</string>
+    <string name="rainy">Tormentoso</string>
+    <string name="windy">Con vientos</string>
 </resources>
